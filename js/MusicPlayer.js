@@ -87,6 +87,11 @@ function play_load(){
 			}else{
 				lrc_info = "null";
 			}
+			if(music_info.mp3 === ""){
+				setPrompt("warning","由于版权问题 无法播放",1200);	
+				next_music();	
+				console.log("由于版权问题 获取歌曲失败 跳过该曲");
+			}
 		},
 		error: function(){
 			setPrompt("warning","加载歌曲失败。。。",1200);	
