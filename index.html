@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<title>你想听的 都在这里</title>
+</head>
+
+<body>
+	<div id="bg"></div>
+	<div id="content">
+    	<audio id="player"></audio>
+    	<div id="player_box">
+        	<div id="music-img">
+            	<div id="img-1"></div>
+                <div id="img-2"></div>
+            </div>
+            <div id="strip">
+            	<a id="play" href="javascript:;">
+                	<img src="img/play.png" title="播放"/>
+                </a>
+                <p id="sound" title="音量">
+                	<span id="sound-this"></span>
+                    <span id="sound-show">60%</span>
+                    <span id="sound-slider">10%</span>
+                </p>
+                <a id="next" href="javascript:;">
+                	<img src="img/forward.png" title="下一曲" />
+                </a>
+            </div>
+            <div id="music-info" class="ellipsis">
+            	<span id="music-name">undefined</span>
+            	<span id="music-artist">undefined</span>
+            </div>
+            <div id="music-lrc" class="ellipsis">
+            	undefined
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/MusicPlayer.js"></script>
+<script type="text/javascript" src="js/prompt.js"></script>
+</html>
