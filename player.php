@@ -4,6 +4,11 @@
 header('Content-type:text/html;charset=UTF-8');
 include 'list.php';
 
+//获取get请求的数据
+function getData(){
+	return isset($_GET['type']) ? $_GET['type'] : null;
+}
+
 //创建一个http请求
 function curl_get($url){
     $refer = "http://music.163.com/";
@@ -82,21 +87,41 @@ function get_music_id()
     return $id;
 }
 
-//循环获取所有歌单列表
-foreach ($playlist_list as $key) {
-	//获取歌单所有数据 返回json
-    $json = get_playlist_info($key);
-    $arr = json_decode($json, true);
-    //循环每一首歌 获取歌曲id
-    foreach ($arr["result"]["tracks"] as $key2) {
-        $id = $key2["id"];
-		//如果歌曲列表没有当前$id 则把当前$id加入列表
-        if (!in_array($id, $play_list)) {
-            $play_list[] = $id;
-        }
-    }
+
+if(getData()){
+	//判断get获取的类型在数组中是否声明 true:歌单列表改为传入类型歌单 返回数组  false:默认所有歌单返 回字符串
+	$playlist_list = isset($playlist_list[getData()]) ? $playlist_list[getData()] : $playlist_list;
+	
+	//判断是否为数组
+	if(is_array($playlist_list)){
+		//循环获取所有歌单列表
+		foreach ($playlist_list as $key) {
+			//获取歌单所有数据 返回json
+			$json = get_playlist_info($key);
+			$arr = json_decode($json, true);
+			//循环每一首歌 获取歌曲id
+			foreach ($arr["result"]["tracks"] as $key2) {
+				$id = $key2["id"];
+				//如果歌曲列表没有当前$id 则把当前$id加入列表
+				if (!in_array($id, $play_list)) {
+					$play_list[] = $id;
+				}
+			}
+		}
+	}else {
+		$json = get_playlist_info($playlist_list);
+		$arr = json_decode($json, true);
+		foreach ($arr["result"]["tracks"] as $key){
+			$id = $key["id"];
+			if (!in_array($id, $play_list)) {
+				$play_list[] = $id;
+			}
+		}
+	}
 }
 
+
+//echo count($play_list)."=====================";
 //获取数据
 $id = get_music_id();
 $music_info = json_decode(get_music_info($id), true);
