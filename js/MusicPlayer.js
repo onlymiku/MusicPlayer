@@ -21,6 +21,17 @@ $(function(){
 	play_load();
 });
 
+//获取URL参数
+function getQueryString(name) { 
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = window.location.search.substr(1).match(reg); 
+	if (r != null) return unescape(r[2]); return null; 
+}
+
+function getUrlData(){
+	var type = getQueryString("type");
+	return type !== null ? type : null;
+}
 
 //动态改变歌曲图片大小
 function lodaImgWidth(){
@@ -68,9 +79,17 @@ function next_music(){
 }
 //加载歌曲
 function play_load(){
+	var type = getUrlData();
+	var url;
+	if(type !== null){
+		url = "player.php?type="+type+"&" + (new Date()).getTime();
+	}else {
+		url = "player.php?=" + (new Date()).getTime();
+	}
+	console.log(url);
 	$.ajax({
 		type:"GET",
-		url:"player.php?=" + (new Date()).getTime(),
+		url:url,
 		//dataType:"json", 报错
 		success: function(data){
 	

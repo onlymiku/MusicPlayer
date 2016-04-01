@@ -87,41 +87,53 @@ function get_music_id()
     return $id;
 }
 
-
-if(getData()){
-	//判断get获取的类型在数组中是否声明 true:歌单列表改为传入类型歌单 返回数组  false:默认所有歌单返 回字符串
-	$playlist_list = isset($playlist_list[getData()]) ? $playlist_list[getData()] : $playlist_list;
-	
-	//判断是否为数组
-	if(is_array($playlist_list)){
-		//循环获取所有歌单列表
-		foreach ($playlist_list as $key) {
-			//获取歌单所有数据 返回json
-			$json = get_playlist_info($key);
-			$arr = json_decode($json, true);
-			//循环每一首歌 获取歌曲id
-			foreach ($arr["result"]["tracks"] as $key2) {
-				$id = $key2["id"];
-				//如果歌曲列表没有当前$id 则把当前$id加入列表
-				if (!in_array($id, $play_list)) {
-					$play_list[] = $id;
-				}
-			}
-		}
-	}else {
-		$json = get_playlist_info($playlist_list);
+//获取所有歌单
+function getArrayData(){
+	global $playlist_list;
+	//循环获取所有歌单列表
+	foreach ($playlist_list as $key) {
+		//获取歌单所有数据 返回json
+		$json = get_playlist_info($key);
 		$arr = json_decode($json, true);
-		foreach ($arr["result"]["tracks"] as $key){
-			$id = $key["id"];
+		//循环每一首歌 获取歌曲id
+		foreach ($arr["result"]["tracks"] as $key2) {
+			$id = $key2["id"];
+			//如果歌曲列表没有当前$id 则把当前$id加入列表
 			if (!in_array($id, $play_list)) {
 				$play_list[] = $id;
 			}
 		}
 	}
 }
+//获取指定歌单
+function getStringData(){
+	global $playlist_list;
+	//获取一个歌单的所有歌曲
+	$json = get_playlist_info($playlist_list);
+	$arr = json_decode($json, true);
+	foreach ($arr["result"]["tracks"] as $key){
+		$id = $key["id"];
+		if (!in_array($id, $play_list)) {
+			$play_list[] = $id;
+		}
+	}
+}
+
+//获取歌单歌曲
+if(getData()){
+	//判断get获取的类型在数组中是否声明 true:歌单列表改为传入类型歌单 返回数组  false:默认所有歌单返 回字符串
+	$playlist_list = isset($playlist_list[getData()]) ? $playlist_list[getData()] : $playlist_list;
+	//判断是否为数组
+	if(is_array($playlist_list)){
+		getArrayData();
+	}else {
+		getStringData();
+	}
+}else {
+	getArrayData();
+}
 
 
-//echo count($play_list)."=====================";
 //获取数据
 $id = get_music_id();
 $music_info = json_decode(get_music_info($id), true);
