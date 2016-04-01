@@ -90,6 +90,7 @@ function get_music_id()
 //获取所有歌单
 function getArrayData(){
 	global $playlist_list;
+	global $play_list;
 	//循环获取所有歌单列表
 	foreach ($playlist_list as $key) {
 		//获取歌单所有数据 返回json
@@ -108,6 +109,7 @@ function getArrayData(){
 //获取指定歌单
 function getStringData(){
 	global $playlist_list;
+	global $play_list;
 	//获取一个歌单的所有歌曲
 	$json = get_playlist_info($playlist_list);
 	$arr = json_decode($json, true);
