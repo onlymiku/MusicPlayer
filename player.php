@@ -110,6 +110,8 @@ function getArrayData(){
 function getStringData(){
 	global $playlist_list;
 	global $play_list;
+	//吧默认的歌曲删除掉
+	$play_list = [];
 	//获取一个歌单的所有歌曲
 	$json = get_playlist_info($playlist_list);
 	$arr = json_decode($json, true);
