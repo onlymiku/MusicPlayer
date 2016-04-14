@@ -4,17 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animation.css">
 <title>你想听的 都在这里</title>
 </head>
-
 <body>
 	<div id="bg"></div>
 	<div id="content">
-    	<audio id="player"></audio>
+        <!-- crossOrigin="anonymous" -->
+        <!-- http://crossorigin.me/ -->
+        <!-- <audio preload="auto" crossorigin="anonymous" controls="" src="http://crossorigin.me/https://s3-us-west-2.amazonaws.com/s.cdpn.io/1715/the_xx_-_intro.mp3"></audio> -->
+        <!-- <audio id="player" preload="auto" crossorigin="anonymous"></audio> -->
+        <audio id="audio"></audio>
     	<div id="player_box">
-        	<div id="music-img">
+        	<div id="music-cover">
             	<div id="img-1"></div>
                 <div id="img-2"></div>
+            </div>
+            <div id="pace">
+                <div id="pace-con">
+                    <a href="javascript:;"></a>
+                    <div id="pace-spot">
+                        <span class="pace-x"></span>
+                        <span class="pace-s" onselectstart="return false"></span>
+                    </div>
+                </div>
             </div>
             <div id="strip">
             	<a id="play" href="javascript:;">
@@ -33,11 +46,12 @@
             	<span id="music-name">undefined</span>
             	<span id="music-artist">undefined</span>
             </div>
-            <div id="music-lrc" class="ellipsis">
-            	undefined
+            <div id="music-lrc">
+            	<p>undefined</p>
             </div>
         </div>
     </div>
+    <div id="canvas"></div>
 </body>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="js/MusicPlayer.js"></script>

@@ -2,6 +2,7 @@
 
 
 header('Content-type:text/html;charset=UTF-8');
+header("Access-Control-Allow-Origin:*");   
 include 'list.php';
 
 //获取get请求的数据
