@@ -18,8 +18,9 @@ var lrc_interval; 								// 歌词时间控制器
 
 // 界面控制dom
 var paceSpot 	= $("#pace-spot"); 				// 整个大的圆点
-var paceX 		= $(".pace-x"); 				// 进度小圆点大圈			
-var paceS 		= $(".pace-s");					// 进度小圆点小圈
+var circle 		= $("#circle"); 				// 小圆点
+var circle1 	= $("#circle1");				// 进度小圆点小圈
+var circle2 	= $("#circle2"); 				// 进度小圆点大圈		
 var pace 		= $("#pace-con"); 				// 进度条
 var sound 		= $("#sound");					// 音量
 
@@ -236,7 +237,8 @@ function setVolume(ev) {
 function f_play(){
 	play.find("img").attr({"src":"img/pause.png","title":"暂停"});
 	img.addClass("roll");
-	paceX.addClass("pace-spot");
+	circle1.addClass("circleRotate");
+	circle2.addClass("circleZoom");
 
 	if (lrc_info !== "null") {
 		lrc_interval = setInterval("display_lrc()", 800);
@@ -247,7 +249,8 @@ function f_play(){
 function f_pause(){
 	play.find("img").attr({"src":"img/play.png","title":"播放"});
 	img.removeClass("roll");
-	paceX.removeClass("pace-spot");
+	circle1.removeClass("circleRotate");
+	circle2.removeClass("circleZoom");
 	//如果播放状态暂停 并且歌词不为空
     if (!audio.paused && lrc_info !== "null") {
         clearInterval(lrc_interval);
@@ -326,7 +329,7 @@ $(audio).bind("pause",function(){
 });
 
 // 拖动歌曲进度条
-paceS.bind("mousedown", function(ev){
+circle.bind("mousedown", function(ev){
 	console.log("按下");
 	$(this).bind("mousemove", function(ev){
 		console.log("移动");

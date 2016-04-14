@@ -82,27 +82,45 @@ animation-fill-mode: forwards; -webkit-animation-fill-mode: forwards; -moz-anima
 	100% 	{ width: 15%; height: 15%; opacity: 1; }
 }
 
-/* 进度条小圆点
+/* 进度条小圆点缩放
 ---------------------------------------------------------------------------*/
-.pace-spot  { animation: pace-spot 2s linear 0s infinite; -webkit-animation: pace-spot 2s linear 0s infinite; -moz-animation: pace-spot 2s linear 0s infinite; -o-animation: pace-spot 2s linear 0s infinite; }
-@keyframes pace-spot {
-	0%		{ width: 6vh; height: 6vh}
-	50% 	{ width: 4vh; height: 4vh }
-	100% 	{ width: 6vh; height: 6vh}
+.circleZoom  { animation: circleZoom 2s linear 0s infinite; -webkit-animation: circleZoom 2s linear 0s infinite; -moz-animation: circleZoom 2s linear 0s infinite; -o-animation: circleZoom 2s linear 0s infinite; }
+@keyframes circleZoom {
+	0%		{ transform: scale(1); -webkit-transform: scale(1); -moz-transform: scale(1); -o-transform: scale(1); }
+	50% 	{ transform: scale(1.2); -webkit-transform: scale(1.2); -moz-transform: scale(1.2); -o-transform: scale(1.2); }
+	100% 	{ transform: scale(1); -webkit-transform: scale(1); -moz-transform: scale(1); -o-transform: scale(1); }
 }
-@-moz-keyframes pace-spot {
-	0%		{ width: 6vh; height: 6vh}
-	50% 	{ width: 4vh; height: 4vh }
-	100% 	{ width: 6vh; height: 6vh}
+@-moz-keyframes circleZoom {
+	0%		{ transform: scale(1); -webkit-transform: scale(1); -moz-transform: scale(1); -o-transform: scale(1); }
+	50% 	{ transform: scale(1.2); -webkit-transform: scale(1.2); -moz-transform: scale(1.2); -o-transform: scale(1.2); }
+	100% 	{ transform: scale(1); -webkit-transform: scale(1); -moz-transform: scale(1); -o-transform: scale(1); }
 }
-@-webkit-keyframes pace-spot {
-	0%		{ width: 6vh; height: 6vh}
-	50% 	{ width: 4vh; height: 4vh }
-	100% 	{ width: 6vh; height: 6vh}
+@-webkit-keyframes circleZoom {
+	0%		{ transform: scale(1); -webkit-transform: scale(1); -moz-transform: scale(1); -o-transform: scale(1); }
+	50% 	{ transform: scale(1.2); -webkit-transform: scale(1.2); -moz-transform: scale(1.2); -o-transform: scale(1.2); }
+	100% 	{ transform: scale(1); -webkit-transform: scale(1); -moz-transform: scale(1); -o-transform: scale(1); }
 }
-@-o-keyframes pace-spot {
-	0%		{ width: 6vh; height: 6vh}
-	50% 	{ width: 4vh; height: 4vh }
-	100% 	{ width: 6vh; height: 6vh}
+@-o-keyframes circleZoom {
+	0%		{ transform: scale(1); -webkit-transform: scale(1); -moz-transform: scale(1); -o-transform: scale(1); }
+	50% 	{ transform: scale(1.2); -webkit-transform: scale(1.2); -moz-transform: scale(1.2); -o-transform: scale(1.2); }
+	100% 	{ transform: scale(1); -webkit-transform: scale(1); -moz-transform: scale(1); -o-transform: scale(1); }
 }
 
+/* 进度条小圆点旋转
+---------------------------------------------------------------------------*/
+.circleRotate { animation: circleRotate 2s linear 0s infinite; -webkit-animation: circleRotate 2s linear 0s infinite; -moz-animation: circleRotate 2s linear 0s infinite; -o-animation: circleRotate 2s linear 0s infinite; }
+@keyframes circleRotate {
+	0%		{ transform: rotate(0deg); -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -o-transform: rotate(0deg); }
+	100%	{ transform: rotate(360deg); -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+@-moz-keyframes circleRotate {
+	0%		{ transform: rotate(0deg); -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -o-transform: rotate(0deg); }
+	100%	{ transform: rotate(360deg); -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+}
+@-webkit-keyframes circleRotate {
+	0%		{ transform: rotate(0deg); -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -o-transform: rotate(0deg); }
+	100%	{ transform: rotate(360deg); -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+}
+@-o-keyframes circleRotate {
+	0%		{ transform: rotate(0deg); -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -o-transform: rotate(0deg); }
+	100%	{ transform: rotate(360deg); -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+}
