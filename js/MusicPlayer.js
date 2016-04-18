@@ -67,9 +67,6 @@ var ShowLrc = ""; 								// 当前显示的歌词
 // 	console.log("You browser does not support AudioContext:"+e);
 // }
 
-
-audio.volume = 0.6;
-
 setType();
 
 loadMusicInfo();
@@ -201,10 +198,7 @@ function visualizer(){
 	requestAnimationFrame(v);
 }
 
-// 音量调节
-sound.bind("click", function(ev) {
-	setVolume(ev);
-})
+
 
 // 播放歌曲/暂停歌曲
 play.bind("click",function(){
@@ -219,19 +213,6 @@ play.bind("click",function(){
 next.bind("click",function(){
 	next_music();
 });
-
-// 音量调节函数
-function setVolume(ev) {
-	var ev = window.event || ev;
-	var total = $("#sound").width();
-	var progressX = ev.clientX - $("#sound").get(0).getBoundingClientRect().left;
-	var width = progressX / total * 100;
-	width = Math.round(width);
-	$("#sound-this").width(progressX);
-	$("#sound-show").html(width+"%");
-	//gainNode.gain.value = width / 100 ;
-	audio.volume = width / 100 ;
-}
 
 // 播放
 function f_play(){
@@ -262,6 +243,7 @@ function next_music(){
 	setPrompt("warning","下一曲。。。",1200);
 	audio.pause();
 	f_pause();
+	paceSpot.css("left","0px");
 	loadMusicInfo();
 }
 // 设置歌词
