@@ -88,6 +88,22 @@ function drawCircular() {
 
 var thisTime;
 var Timing;
+
+function plusVolume() {
+	volume += 10;
+	if(volume >= 100) {
+		volume = 100;
+	}
+	drawCircular()
+}
+function reduceVolume() {
+	volume -= 10;
+	if(volume <= 0) {
+		volume = 0;
+	}
+	drawCircular()
+}
+
 function scrollFunc(e) {
 	thisTime = 0;
 	clearInterval(Timing);
@@ -102,31 +118,15 @@ function scrollFunc(e) {
 
     if(e.wheelDelta){		//IE/Opera/Chrome
     	if(e.wheelDelta >= 120 ) {
-    		volume -= 10;
-    		if(volume <= 0) {
-    			volume = 0;
-    		}
-    		drawCircular()
+    		reduceVolume();
     	}else {
-    		volume += 10;
-    		if(volume >= 100) {
-    			volume = 100;
-    		}
-    		drawCircular()
+			plusVolume();
     	}
     }else if(e.detail){		//Firefox
     	if(e.detail >= 0 ) {
-    		volume -= 10;
-    		if(volume <= 0) {
-    			volume = 0;
-    		}
-    		drawCircular()
+    		reduceVolume();
     	}else {
-    		volume += 10;
-    		if(volume >= 100) {
-    			volume = 100;
-    		}
-    		drawCircular()
+			plusVolume();
     	}
     }
 }
@@ -144,9 +144,53 @@ function setVolume() {
 	audio.volume = volume / 100 ;
 }
 
+function touchStart(event) {
+	/*
+	*
+	*	touches:     		//当前屏幕上所有手指的列表
+	*	targetTouches:      //当前dom元素上手指的列表，尽量使用这个代替touches
+	*	changedTouches:     //涉及当前事件的手指的列表，尽量使用这个代替touches
+	*
+	*	clientX / clientY:      //触摸点相对浏览器窗口的位置
+	*	pageX / pageY:       	//触摸点相对于页面的位置
+	*	screenX  /  screenY:    //触摸点相对于屏幕的位置
+	*
+	*/
+	var initY = event.touches[0].pageY;
+	var temp = 50;
+	var tempY;
+	document.addEventListener('touchmove',function(event){
+		thisTime = 0;
+		clearInterval(Timing);
+
+		if(thisTime == 0) {
+	    	Timing = setInterval("volumeHide()",1000);
+		}
+
+		var thisY = event.touches[0].pageY;
+		tempY = initY - thisY;
+		
+		console.log(tempY+"tempY");
+
+		if(tempY >= 50 || tempY <= -50) {
+			volumeBox.css("display","block");
+			if(temp < tempY) {
+				plusVolume();
+			}else {
+				reduceVolume();
+			}
+			console.log(temp+"temp")
+			temp = tempY;
+		}
+	},false)
+}
+
 // 绑定鼠标滚动事件
 if(document.addEventListener){
     document.addEventListener('DOMMouseScroll',scrollFunc,false);
+    document.addEventListener('touchstart',touchStart,false);
+    //document.addEventListener('touchmove',touchMove,false);
+    
 }
 //IE/Opera/Chrome/Safari
 window.onmousewheel=scrollFunc;
