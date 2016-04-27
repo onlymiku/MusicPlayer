@@ -67,16 +67,9 @@ var ShowLrc = ""; 								// 当前显示的歌词
 // 	console.log("You browser does not support AudioContext:"+e);
 // }
 
-setType();
-
 loadMusicInfo();
 
 //visualizer();
-
-window.onresize = function(){
-	setType();
-};
-
 
 cover.hover(
 	function(){
@@ -88,21 +81,21 @@ cover.hover(
 )
 
 // 动态改变歌曲图片大小
-function setType(){
-	cover.width(cover.height());
+// function setType(){
+// 	cover.width(cover.height());
 
-	Height = canvasBox.clientHeight;
-	Width = canvasBox.clientWidth;
-	canvas.height = Height;
-	canvas.width = Width;
+// 	Height = canvasBox.clientHeight;
+// 	Width = canvasBox.clientWidth;
+// 	canvas.height = Height;
+// 	canvas.width = Width;
 
-	var line = ctx.createLinearGradient(0, 0, 0, Height);
+// 	var line = ctx.createLinearGradient(0, 0, 0, Height);
 
-	line.addColorStop(1, '#0f0');
-	line.addColorStop(0.5, '#ff0');
-	line.addColorStop(0, '#f00');
-	ctx.fillStyle = line;
-}
+// 	line.addColorStop(1, '#0f0');
+// 	line.addColorStop(0.5, '#ff0');
+// 	line.addColorStop(0, '#f00');
+// 	ctx.fillStyle = line;
+// }
 
 // 获取URL参数
 function getQueryString(name) { 
@@ -128,11 +121,8 @@ function loadMusicInfo(){
 	$.ajax({
 		type:"GET",
 		url:url,
-		//dataType:"json", 报错
 		success: function(data){
 			music_info = JSON.parse(data);
-			//$(audio).attr("src", "music.mp3");
-			//$(audio).attr("src", "http://crossorigin.me/" + music_info.mp3);
 			$(audio).attr("src", music_info.mp3);
 			img.css("background-image","url("+ music_info.cover +")");
 			m_name.html(music_info.name);
@@ -177,26 +167,26 @@ function loadMusicInfo(){
 // }
 
 // 绘制频谱函数
-function draw(arr) {
-	ctx.clearRect(0, 0, Width, Height);
-	var w = Width / arr.length;
-	for (var i = 0; i < arr.length; i++) {
-		var h = arr[i] / 256 * Height;
-		ctx.fillRect(w * i, Height - h, w * 0.6, h);
-	}
-}
+// function draw(arr) {
+// 	ctx.clearRect(0, 0, Width, Height);
+// 	var w = Width / arr.length;
+// 	for (var i = 0; i < arr.length; i++) {
+// 		var h = arr[i] / 256 * Height;
+// 		ctx.fillRect(w * i, Height - h, w * 0.6, h);
+// 	}
+// }
 
-function visualizer(){
-	// analyser.frequencyBinCount 获取的长度 设置Uint8Array的长度 arr并没有数据 只是指定长度
-	var arr = new Uint8Array(analyser.frequencyBinCount);
+// function visualizer(){
+// 	// analyser.frequencyBinCount 获取的长度 设置Uint8Array的长度 arr并没有数据 只是指定长度
+// 	var arr = new Uint8Array(analyser.frequencyBinCount);
 	
-	function v() {
-		analyser.getByteFrequencyData(arr);
-		draw(arr);
-		requestAnimationFrame(v);
-	}
-	requestAnimationFrame(v);
-}
+// 	function v() {
+// 		analyser.getByteFrequencyData(arr);
+// 		draw(arr);
+// 		requestAnimationFrame(v);
+// 	}
+// 	requestAnimationFrame(v);
+// }
 
 
 
@@ -263,8 +253,45 @@ function display_lrc() {
 }
 
 
+// 圆点移动函数
+function spotMousemove(ev) {
+	var ev = window.event || ev;
+	// 获取元素左边距离屏幕左边的距离
+	var leftX = $("#pace-con a").get(0).getBoundingClientRect().left;
+	// 获取元素右边距离屏幕左边的距离
+	var rightX = $("#pace-con a").get(0).getBoundingClientRect().right;
+	// 获取元素的距离
+	var width = rightX - leftX;
+	// 获取鼠标位置距离元素的位置
+	var progressX = ev.clientX - leftX;
+	if( progressX <= 0 ) {
+		progressX = 0;
+	} else if (progressX >= width) {
+		progressX = width;
+	}
+	paceSpot.css("left",progressX+"px");
+}
 
+/* = 进度条自动移动
+-----------------------------------------------------*/
+function stripMove() {
 
+	var total = audio.duration;			//获取歌曲总长度
+	var current = audio.currentTime;	//获取歌曲当前长度
+	var slider_total = pace.width(); 	//获取进度条的总长度
+	paceSpot.css("left", (current/total)*slider_total);
+
+}
+/* = 播放完成
+-----------------------------------------------------*/
+function playEnd(){
+
+	// 歌曲播放完毕
+	if(audio.ended){
+		paceSpot.css("left","0px");
+		next_music();
+	}
+}
 
 
 $(audio).bind("timeupdate", function(){
@@ -328,47 +355,5 @@ $("#pace-con > a").bind("click", function(ev){
 	var ev = window.event || ev;
 	var total = $(this).width();
 	var progressX = ev.clientX - $(this).get(0).getBoundingClientRect().left;
-	//var width = progressX / total * 100;
-	//width = Math.round(width);
 	paceSpot.css("left",progressX+"px");
 });
-
-// 圆点移动函数
-function spotMousemove(ev) {
-	var ev = window.event || ev;
-	// 获取元素左边距离屏幕左边的距离
-	var leftX = $("#pace-con a").get(0).getBoundingClientRect().left;
-	// 获取元素右边距离屏幕左边的距离
-	var rightX = $("#pace-con a").get(0).getBoundingClientRect().right;
-	// 获取元素的距离
-	var width = rightX - leftX;
-	// 获取鼠标位置距离元素的位置
-	var progressX = ev.clientX - leftX;
-	if( progressX <= 0 ) {
-		progressX = 0;
-	} else if (progressX >= width) {
-		progressX = width;
-	}
-	paceSpot.css("left",progressX+"px");
-}
-
-/* = 进度条自动移动
------------------------------------------------------*/
-function stripMove() {
-
-	var total = audio.duration;			//获取歌曲总长度
-	var current = audio.currentTime;	//获取歌曲当前长度
-	var slider_total = pace.width(); 	//获取进度条的总长度
-	paceSpot.css("left", (current/total)*slider_total);
-
-}
-/* = 播放完成
------------------------------------------------------*/
-function playEnd(){
-
-	// 歌曲播放完毕
-	if(audio.ended){
-		paceSpot.css("left","0px");
-		next_music();
-	}
-}

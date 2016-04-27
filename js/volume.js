@@ -8,11 +8,14 @@ var canvas = $("<canvas></canvas>").get(0);
 // 绘图上下文
 var context = canvas.getContext('2d');
 
-window.onresize = function(){
+$(window).resize(function() {
 	resize();
-};
+})
 
 function resize() {
+	// 动态改变歌曲图片大小
+	cover.width(cover.height());
+	// 动态改变音量画布大小
 	volumeBox.width(volumeBox.height());
 	center = volumeBox.width() / 2;
 	Width = Height = volumeBox.height();

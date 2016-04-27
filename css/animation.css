@@ -42,7 +42,7 @@ animation-fill-mode: forwards; -webkit-animation-fill-mode: forwards; -moz-anima
 
 /* 鼠标移入封面
 -------------------------------------------------------------------------*/
-.coverHover1 { animation: coverHover1 0.5s; -webkit-animation: coverHover1 0.5s; -moz-animation: coverHover1 0.5s; -o-animation: coverHover1 0.5s; 
+.coverHover1 { animation: coverHover1 0.3s; -webkit-animation: coverHover1 0.3s; -moz-animation: coverHover1 0.3s; -o-animation: coverHover1 0.3s; 
 animation-fill-mode: forwards; -webkit-animation-fill-mode: forwards; -moz-animation-fill-mode: forwards; -o-animation-fill-mode: forwards; }
 @keyframes coverHover1 {
 	0% 		{ width: 15%; height: 15%; opacity: 1; }
@@ -63,7 +63,7 @@ animation-fill-mode: forwards; -webkit-animation-fill-mode: forwards; -moz-anima
 
 /* 鼠标移出封面
 -------------------------------------------------------------------------*/
-.coverHover2 { animation: coverHover2 0.5s; -webkit-animation: coverHover2 0.5s; -moz-animation: coverHover2 0.5s; -o-animation: coverHover2 0.5s; 
+.coverHover2 { animation: coverHover2 0.3s; -webkit-animation: coverHover2 0.3s; -moz-animation: coverHover2 0.3s; -o-animation: coverHover2 0.3s; 
 animation-fill-mode: forwards; -webkit-animation-fill-mode: forwards; -moz-animation-fill-mode: forwards; -o-animation-fill-mode: forwards; }
 @keyframes coverHover2 {
 	0% 		{ width: 5%; height: 5%; opacity: 0; }
